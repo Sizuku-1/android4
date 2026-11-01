@@ -1,0 +1,51 @@
+<resources>
+    <!-- 应用名称：姓名+学号 -->
+    <string name="app_name">唐熙鹏 2024080538</string>
+
+    <!-- 主界面 -->
+    <string name="title_personal_info">个人信息</string>
+    <string name="label_name">姓名：</string>
+    <string name="label_gender">性别：</string>
+    <string name="label_student_id">学号：</string>
+    <string name="label_phone">电话：</string>
+    <string name="label_email">邮件地址：</string>
+    <string name="label_hobby">爱好：</string>
+    <string name="label_high_score">游戏最高分：</string>
+    <string name="btn_edit_info">修改个人信息</string>
+    <string name="btn_card_game">翻牌游戏</string>
+    <string name="avatar_desc">头像</string>
+
+    <!-- 默认信息 -->
+    <string name="default_name">唐熙鹏</string>
+    <string name="default_gender">男</string>
+    <string name="default_student_id">2024080538</string>
+    <string name="default_phone">13800000000</string>
+    <string name="default_email">txp@example.com</string>
+    <string name="default_hobby">旅游、阅读</string>
+
+    <!-- 信息修改界面 -->
+    <string name="title_edit_info">信息修改</string>
+    <string name="hint_name">姓名</string>
+    <string name="hint_student_id">学号</string>
+    <string name="hint_phone">电话号码</string>
+    <string name="hint_email">电子邮件地址</string>
+    <string name="label_gender_male">男</string>
+    <string name="label_gender_female">女</string>
+    <string name="label_hobby_travel">旅游</string>
+    <string name="label_hobby_read">阅读</string>
+    <string name="label_hobby_game">游戏</string>
+    <string name="label_hobby_shopping">购物</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_cancel">取消</string>
+
+    <!-- 翻牌游戏界面 -->
+    <string name="title_card_game">翻牌游戏</string>
+    <string name="label_score">得分：</string>
+    <string name="btn_reset">重置游戏</string>
+    <string name="btn_exit">退出</string>
+    <string name="card_back_desc">牌背</string>
+    <string name="game_finished">游戏结束！</string>
+
+    <!-- 通用 -->
+    <string name="btn_back">返回</string>
+</resources>
