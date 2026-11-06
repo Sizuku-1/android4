@@ -1,37 +1,20 @@
-# Android4 翻牌游戏
+# 实验五 RecyclerView 翻牌游戏
 
-Android 移动应用开发实验四，Kotlin + XML 布局，采用 MVC 结构。
+基于实验四在 `Dev` 分支开发。应用保留个人信息页和最高分，首页右上角菜单可打开“关于”对话框。
 
-## 功能
+- 竖屏为 4 列 × 6 行，共 24 张牌。横屏为 10 列 × 3 行，共 30 张牌。旋转屏幕时保留各自的牌局和分数。
+- 翻开一张牌扣 1 分。三张同点数奖励 16 分，三张仅同花色奖励 4 分，不匹配另扣 2 分。失败的三张牌保留至下一次点击，匹配成功的牌会锁定。
+- 重置只重新开始当前方向的牌局。退出游戏时将本次进入游戏以来的最高分返回给首页。
+- 发牌时每个入选点数发三张。按照点数匹配可以清空牌阵，混用花色匹配可能使剩余牌无法继续配对，此时可以重置。
 
-- 主界面：显示唐熙鹏 2024080538 的个人资料与游戏最高分。
-- 个人信息：修改姓名、学号、电话、邮箱、性别与爱好，保存后返回主界面；信息仅保存在内存。
-- 翻牌游戏：4×4 牌阵、匹配计分、重新开始与退出。
+用 Android Studio 打开工程根目录并同步 Gradle，使用 Android SDK 37、Android Studio 配套 JDK 和 API 34 或以上的设备运行。实验五使用独立应用 ID，可与实验四同时安装。
 
-## 在 Android Studio 中运行
-
-1. 克隆仓库，用 Android Studio 打开项目根目录。
-2. 安装 Android SDK 37，使用 Android Studio 配套 JDK，等待 Gradle 同步。
-3. 选择 API 34 或以上的模拟器或设备，运行 app。
-
-本机 SDK 路径不提交，Android Studio 会生成 local.properties。
-
-## 测试
-
-```sh
-./gradlew testDebugUnitTest
-./gradlew connectedDebugAndroidTest
+```powershell
+./gradlew.bat assembleDebug testDebugUnitTest assembleDebugAndroidTest
 ```
 
-Windows 可使用 gradlew.bat。UI 测试需要已连接的模拟器或设备及对应测试依赖。
+界面测试可在 Android Studio 中运行 `MainActivityUITest`，也可安装应用与测试 APK 后执行：
 
-本次验证：原项目构建成功，9 项模型单元测试通过；测试 APK 经 AndroidJUnitRunner 直接执行，3 项 Espresso UI 测试通过。Gradle 离线 connectedDebugAndroidTest 因 UTP 依赖未缓存未完成。
-
-## 计分规则
-
-翻开一张未选中的牌扣 1 分；同点数匹配基础分 4，同花色基础分 1，成功奖励为基础分 ×4；不匹配另扣 2 分。匹配牌不可再次选择。
-
-## 当前限制
-
-个人信息和游戏进度不持久化，页面重建后可能重置；退出游戏仅回传当前局分数，重置前高分可能丢失。随机发牌不保证所有牌均能配对。部分牌面符号和连接符仍可进一步迁移为字符串资源。
-
+```text
+adb shell am instrument -w cn.edu.sicnu.cs.txp.android5.test/androidx.test.runner.AndroidJUnitRunner
+```

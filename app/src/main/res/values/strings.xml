@@ -48,4 +48,13 @@
 
     <!-- 通用 -->
     <string name="btn_back">返回</string>
+    <string name="menu_about">关于</string>
+    <string name="about_message">%1$s\n实验五 · RecyclerView 翻牌游戏</string>
+    <string name="game_rules">选 3 张同点数或同花色的牌完成匹配</string>
+    <string name="score_zero">0</string>
+    <string name="card_back_symbol">?</string>
+    <string name="card_position_desc">第 %1$d 张牌，牌背</string>
+    <string name="card_face_desc">第 %1$d 张牌，%2$s</string>
+    <string name="card_matched_desc">第 %1$d 张牌，%2$s，已匹配</string>
+    <string name="hobby_separator">、</string>
 </resources>

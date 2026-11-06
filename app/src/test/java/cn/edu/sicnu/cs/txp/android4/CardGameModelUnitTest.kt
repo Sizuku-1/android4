@@ -59,13 +59,13 @@ class CardGameModelUnitTest {
 
     @Test
     fun game_initialScoreIsZero() {
-        val game = CardMatchingGame(16)
+        val game = CardMatchingGame(24)
         assertEquals(0, game.score)
     }
 
     @Test
     fun game_choosingCardCostsOnePoint() {
-        val game = CardMatchingGame(16)
+        val game = CardMatchingGame(24)
         game.chooseCardAtIndex(0)
         assertEquals(-1, game.score)
         assertTrue(game.cardAtIndex(0).isChosen)
@@ -73,38 +73,65 @@ class CardGameModelUnitTest {
 
     @Test
     fun game_choosingSameCardAgainUnchooses() {
-        val game = CardMatchingGame(16)
+        val game = CardMatchingGame(24)
         game.chooseCardAtIndex(0)
         game.chooseCardAtIndex(0)
         assertFalse(game.cardAtIndex(0).isChosen)
     }
 
     @Test
-    fun game_matchingCardsGiveBonus() {
-        val game = CardMatchingGame(16)
-        // 寻找两张 rank 相同的牌
-        var first = -1
-        var second = -1
-        outer@ for (i in 0 until game.cardCount()) {
-            for (j in i + 1 until game.cardCount()) {
-                val a = game.cardAtIndex(i)
-                val b = game.cardAtIndex(j)
-                if (a.rankValue == b.rankValue) {
-                    first = i
-                    second = j
-                    break@outer
-                }
-            }
-        }
-        // 16 张牌中一定存在同 rank 的牌
-        assertTrue(first >= 0 && second >= 0)
+    fun sameSuitTrioMatches() {
+        val first = Card("♥", "A")
+        assertEquals(1, first.match(arrayOf(Card("♥", "3"), Card("♥", "K"))))
+        assertEquals(0, first.match(arrayOf(Card("♥", "3"), Card("♠", "K"))))
+    }
 
-        game.chooseCardAtIndex(first)
-        game.chooseCardAtIndex(second)
-        // 两张牌都 matched
-        assertTrue(game.cardAtIndex(first).isMatched)
-        assertTrue(game.cardAtIndex(second).isMatched)
-        // 得分 = -1(第一次) + (4*4 - 1)(第二次) = 14
-        assertEquals(14, game.score)
+    @Test
+    fun matchRequiresThreeCardsAndLocksTheTrio() {
+        val game = CardMatchingGame(24)
+        val sameRank = (0 until game.cardCount()).filter {
+            game.cardAtIndex(it).rankValue == game.cardAtIndex(0).rankValue
+        }
+        assertEquals(3, sameRank.size)
+        sameRank.take(2).forEach(game::chooseCardAtIndex)
+        assertEquals(-2, game.score)
+        assertFalse(game.cardAtIndex(0).isMatched)
+        game.chooseCardAtIndex(sameRank.last())
+        assertEquals(13, game.score)
+        assertTrue(sameRank.all { game.cardAtIndex(it).isMatched })
+        game.chooseCardAtIndex(0)
+        assertEquals(13, game.score)
+    }
+
+    @Test
+    fun mismatchedTrioClosesWhenNextCardIsTapped() {
+        val game = CardMatchingGame(24)
+        val first = game.cardAtIndex(0)
+        val second = (1 until game.cardCount()).first {
+            val candidate = game.cardAtIndex(it)
+            candidate.rankValue != first.rankValue && candidate.suitValue != first.suitValue
+        }
+        val third = (1 until game.cardCount()).first { it != second }
+        val next = (1 until game.cardCount()).first { it != second && it != third }
+        val trio = listOf(0, second, third)
+        trio.forEach(game::chooseCardAtIndex)
+        assertEquals(-5, game.score)
+        assertTrue(trio.all { game.cardAtIndex(it).isChosen })
+        game.chooseCardAtIndex(next)
+        assertEquals(-6, game.score)
+        assertTrue(trio.none { game.cardAtIndex(it).isChosen })
+        assertTrue(game.cardAtIndex(next).isChosen)
+    }
+
+    @Test
+    fun resetClearsScoreAndRestoresFaceDownBoard() {
+        val game = CardMatchingGame(30)
+        game.chooseCardAtIndex(0)
+        game.reset()
+        assertEquals(0, game.score)
+        assertEquals(30, game.cardCount())
+        assertTrue((0 until game.cardCount()).none {
+            game.cardAtIndex(it).isChosen || game.cardAtIndex(it).isMatched
+        })
     }
 }

@@ -3,7 +3,10 @@ package cn.edu.sicnu.cs.txp.android4
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -51,13 +54,14 @@ class MainActivity : AppCompatActivity() {
         tvHobby = findViewById(R.id.tv_hobby)
         tvHighScore = findViewById(R.id.tv_high_score)
 
-        playerName = getString(R.string.default_name)
-        playerGender = getString(R.string.default_gender)
-        playerStudentId = getString(R.string.default_student_id)
-        playerPhone = getString(R.string.default_phone)
-        playerEmail = getString(R.string.default_email)
-        playerHobby = getString(R.string.default_hobby)
+        playerName = savedInstanceState?.getString(KEY_NAME) ?: getString(R.string.default_name)
+        playerGender = savedInstanceState?.getString(KEY_GENDER) ?: getString(R.string.default_gender)
+        playerStudentId = savedInstanceState?.getString(KEY_STUDENT_ID) ?: getString(R.string.default_student_id)
+        playerPhone = savedInstanceState?.getString(KEY_PHONE) ?: getString(R.string.default_phone)
+        playerEmail = savedInstanceState?.getString(KEY_EMAIL) ?: getString(R.string.default_email)
+        playerHobby = savedInstanceState?.getString(KEY_HOBBY) ?: getString(R.string.default_hobby)
 
+        highScore = savedInstanceState?.getInt(KEY_HIGH_SCORE) ?: 0
         refreshInfo()
 
         findViewById<Button>(R.id.btn_edit_info).setOnClickListener {
@@ -75,6 +79,32 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, CardGameActivity::class.java)
             startActivityForResult(intent, REQUEST_CARD_GAME)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_options, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId != R.id.action_about) return super.onOptionsItemSelected(item)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.menu_about)
+            .setMessage(getString(R.string.about_message, getString(R.string.app_name)))
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
+        return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_NAME, playerName)
+        outState.putString(KEY_GENDER, playerGender)
+        outState.putString(KEY_STUDENT_ID, playerStudentId)
+        outState.putString(KEY_PHONE, playerPhone)
+        outState.putString(KEY_EMAIL, playerEmail)
+        outState.putString(KEY_HOBBY, playerHobby)
+        outState.putInt(KEY_HIGH_SCORE, highScore)
     }
 
     private fun refreshInfo() {
