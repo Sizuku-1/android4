@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "cn.edu.sicnu.cs.txp.android4"
+        applicationId = "cn.edu.sicnu.cs.txp.android5"
         minSdk = 34
         targetSdk = 37
         versionCode = 1
@@ -34,6 +34,7 @@ android {
 dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)

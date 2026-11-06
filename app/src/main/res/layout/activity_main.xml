@@ -187,7 +187,7 @@
             android:id="@+id/tv_high_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="@string/score_zero"
             android:textColor="@color/accent"
             android:textSize="16sp"
             android:textStyle="bold"

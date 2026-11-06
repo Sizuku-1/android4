@@ -82,7 +82,7 @@ class PersonInfoActivity : AppCompatActivity() {
         if (cbRead.isChecked) hobbies.add(getString(R.string.label_hobby_read))
         if (cbGame.isChecked) hobbies.add(getString(R.string.label_hobby_game))
         if (cbShopping.isChecked) hobbies.add(getString(R.string.label_hobby_shopping))
-        val hobbyText = hobbies.joinToString("、")
+        val hobbyText = hobbies.joinToString(getString(R.string.hobby_separator))
 
         val data = Intent().apply {
             putExtra(MainActivity.KEY_NAME, name)

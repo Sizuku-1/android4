@@ -1,59 +1,61 @@
 package cn.edu.sicnu.cs.txp.android4.model
 
-class CardMatchingGame(count: Int) {
+import java.io.Serializable
+
+class CardMatchingGame(private val count: Int) : Serializable {
     var score = 0
         private set
 
-    private val cards: MutableList<Card>
-
-    val MISMATCH_PENALTY = 2
-    val MATCH_BONUS = 4
-    val COST_TO_CHOOSE = 1
+    private val cards = mutableListOf<Card>()
 
     init {
+        require(count in 3..39 && count % 3 == 0)
+        reset()
+    }
+
+    fun reset() {
         val deck = Deck()
-        cards = mutableListOf()
-        for (i in 1..count) {
-            val card: Card? = deck.drawRandomCard()
-            if (card != null) {
-                cards.add(card)
-            }
-        }
+        val fullDeck = generateSequence { deck.drawRandomCard() }.toList()
+
+        // Deal three cards of each selected rank, then shuffle the whole board.
+        cards.clear()
+        cards.addAll(
+            fullDeck.groupBy { it.rankValue }.values.shuffled().take(count / 3)
+                .flatMap { it.take(3) }.shuffled()
+        )
+        score = 0
     }
 
     fun cardCount(): Int = cards.size
 
-    fun cardAtIndex(index: Int): Card {
-        return cards.get(index)
-    }
+    fun cardAtIndex(index: Int): Card = cards[index]
 
     fun chooseCardAtIndex(index: Int) {
         val card = cardAtIndex(index)
-        if (!card.isMatched) {
-            if (card.isChosen) {
-                card.isChosen = false
-            } else {
-                for (otherCard in cards) {
-                    if (otherCard.isChosen && !otherCard.isMatched) {
-                        val matchScore = card.match(arrayOf(otherCard))
-                        if (matchScore > 0) {
-                            score += matchScore * MATCH_BONUS
-                            otherCard.isMatched = true
-                            card.isMatched = true
-                        } else {
-                            score -= MISMATCH_PENALTY
-                            otherCard.isChosen = false
-                        }
-                        break
-                    }
-                }
-                score -= COST_TO_CHOOSE
-                card.isChosen = true
-            }
+        if (card.isMatched) return
+
+        val open = cards.filter { it.isChosen && !it.isMatched }
+        if (open.size == 3) {
+            // Leave a failed trio visible until the next card tap.
+            open.forEach { it.isChosen = false }
+        } else if (card.isChosen) {
+            card.isChosen = false
+            return
+        }
+
+        card.isChosen = true
+        score -= 1
+        if (open.size != 2) return
+
+        val matchScore = card.match(open.toTypedArray())
+        if (matchScore > 0) {
+            score += matchScore * 4
+            card.isMatched = true
+            open.forEach { it.isMatched = true }
+        } else {
+            score -= 2
         }
     }
 
-    fun isGameFinished(): Boolean {
-        return cards.all { it.isMatched }
-    }
+    fun isGameFinished(): Boolean = cards.all { it.isMatched }
 }
