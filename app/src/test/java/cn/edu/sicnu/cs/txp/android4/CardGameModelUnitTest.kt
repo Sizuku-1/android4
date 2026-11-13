@@ -134,4 +134,18 @@ class CardGameModelUnitTest {
             game.cardAtIndex(it).isChosen || game.cardAtIndex(it).isMatched
         })
     }
+
+    @Test
+    fun pairModeMatchesTwoCardsAndLocksThePair() {
+        val game = CardMatchingGame(24, 2)
+        val other = (1 until game.cardCount()).single {
+            game.cardAtIndex(it).rankValue == game.cardAtIndex(0).rankValue
+        }
+        game.chooseCardAtIndex(0)
+        assertFalse(game.cardAtIndex(0).isMatched)
+        game.chooseCardAtIndex(other)
+        assertEquals(14, game.score)
+        assertTrue(game.cardAtIndex(0).isMatched)
+        assertTrue(game.cardAtIndex(other).isMatched)
+    }
 }
