@@ -1,20 +1,13 @@
-# 实验五 RecyclerView 翻牌游戏
+# 实验六 多 Fragment 应用
 
-基于实验四在 `Dev` 分支开发。应用保留个人信息页和最高分，首页右上角菜单可打开“关于”对话框。
+在实验五的基础上，使用一个 Activity 和底部标签切换三个 Fragment 实例。个人信息页可编辑资料，点击「保存」后写入文件。两张配对和三张配对各自保存牌序、翻开和匹配状态、得分及最高分。
 
-- 竖屏为 4 列 × 6 行，共 24 张牌。横屏为 10 列 × 3 行，共 30 张牌。旋转屏幕时保留各自的牌局和分数。
-- 翻开一张牌扣 1 分。三张同点数奖励 16 分，三张仅同花色奖励 4 分，不匹配另扣 2 分。失败的三张牌保留至下一次点击，匹配成功的牌会锁定。
-- 重置只重新开始当前方向的牌局。退出游戏时将本次进入游戏以来的最高分返回给首页。
-- 发牌时每个入选点数发三张。按照点数匹配可以清空牌阵，混用花色匹配可能使剩余牌无法继续配对，此时可以重置。
+- 两种玩法均沿用实验五的计分规则。每翻开一张牌扣 1 分，同点数匹配奖励 16 分，同花色匹配奖励 4 分，匹配失败另扣 2 分。
+- 竖屏每种模式均有 24 张牌。横屏两张配对有 24 张牌，三张配对有 30 张牌。横竖屏牌局分别保存，重置仅影响当前牌局。
+- 资料和牌局使用 `Serializable`、`ObjectInputStream` 和 `ObjectOutputStream` 存放在应用私有文件目录中。
 
-用 Android Studio 打开工程根目录并同步 Gradle，使用 Android SDK 37、Android Studio 配套 JDK 和 API 34 或以上的设备运行。实验五使用独立应用 ID，可与实验四同时安装。
+用 Android Studio 打开本目录并同步 Gradle，选择 API 34 或以上的模拟器或设备，运行 `app`。项目使用 Android SDK 37。实验六使用独立应用 ID，可与实验五同时安装。
 
 ```powershell
-./gradlew.bat assembleDebug testDebugUnitTest assembleDebugAndroidTest
-```
-
-界面测试可在 Android Studio 中运行 `MainActivityUITest`，也可安装应用与测试 APK 后执行：
-
-```text
-adb shell am instrument -w cn.edu.sicnu.cs.txp.android5.test/androidx.test.runner.AndroidJUnitRunner
+.\gradlew.bat assembleDebug testDebugUnitTest connectedDebugAndroidTest
 ```

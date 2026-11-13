@@ -1,222 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_main"
-    tools:context=".MainActivity">
+    android:background="@color/primary_dark"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/page_tabs"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/title_personal_info"
-        android:textColor="@color/text_primary"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_avatar"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/avatar_desc"
-        android:src="@drawable/ic_avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/info_panel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
         android:background="@color/white"
-        android:elevation="4dp"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_avatar">
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/primary"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/primary"
+        app:tabTextColor="@color/text_secondary">
 
-        <TextView
-            android:id="@+id/tv_label_name"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_name"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/title_personal_info" />
 
-        <TextView
-            android:id="@+id/tv_name"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_name"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/tv_label_name"
-            app:layout_constraintTop_toTopOf="@id/tv_label_name" />
+            android:text="@string/tab_pair" />
 
-        <TextView
-            android:id="@+id/tv_label_gender"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/label_gender"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_name" />
-
-        <TextView
-            android:id="@+id/tv_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_gender"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_label_gender"
-            app:layout_constraintTop_toTopOf="@id/tv_label_gender" />
-
-        <TextView
-            android:id="@+id/tv_label_student_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/label_student_id"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_gender" />
-
-        <TextView
-            android:id="@+id/tv_student_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_student_id"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_label_student_id"
-            app:layout_constraintTop_toTopOf="@id/tv_label_student_id" />
-
-        <TextView
-            android:id="@+id/tv_label_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/label_phone"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_student_id" />
-
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_phone"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_label_phone"
-            app:layout_constraintTop_toTopOf="@id/tv_label_phone" />
-
-        <TextView
-            android:id="@+id/tv_label_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/label_email"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_phone" />
-
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_email"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_label_email"
-            app:layout_constraintTop_toTopOf="@id/tv_label_email" />
-
-        <TextView
-            android:id="@+id/tv_label_hobby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/label_hobby"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_email" />
-
-        <TextView
-            android:id="@+id/tv_hobby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/default_hobby"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tv_label_hobby"
-            app:layout_constraintTop_toTopOf="@id/tv_label_hobby" />
-
-        <TextView
-            android:id="@+id/tv_label_high_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/label_high_score"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_label_hobby" />
-
-        <TextView
-            android:id="@+id/tv_high_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/score_zero"
-            android:textColor="@color/accent"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/tv_label_high_score"
-            app:layout_constraintTop_toTopOf="@id/tv_label_high_score" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/btn_edit_info"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
-        android:text="@string/btn_edit_info"
-        app:layout_constraintEnd_toStartOf="@id/btn_card_game"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_panel" />
-
-    <Button
-        android:id="@+id/btn_card_game"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/btn_card_game"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_edit_info"
-        app:layout_constraintTop_toBottomOf="@id/info_panel" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="@string/tab_trio" />
+    </com.google.android.material.tabs.TabLayout>
+</LinearLayout>

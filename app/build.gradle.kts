@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "cn.edu.sicnu.cs.txp.android5"
+        applicationId = "cn.edu.sicnu.cs.txp.android6"
         minSdk = 34
         targetSdk = 37
         versionCode = 1
